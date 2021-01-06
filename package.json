@@ -1,0 +1,46 @@
+{
+  "name": "primarymis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.15.1"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/App.js",
+    "db:insertadmin": "babel-node src/database/model/userModel.js",
+    "db:insertLevels": "babel-node src/database/model/levelModel.js",
+    "build": "babel src --out-dir dist",
+    "start": "npm run build && node dist/App.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "babel-node --version",
+    "heroku-postbuild": "npm install --production"
+  },
+  "author": "chris and dany",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "@babel/runtime": "^7.8.4",
+    "@hapi/joi": "^15.0.3",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
+    "moment": "^2.24.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^1.19.1",
+    "password-generator": "^2.3.2",
+    "pg": "^8.5.1",
+    "random": "^2.2.0",
+    "regenerator-runtime": "^0.13.3",
+    "@babel/preset-env": "^7.12.1",
+    "babel-node": "0.0.1-security"
+  }
+}
