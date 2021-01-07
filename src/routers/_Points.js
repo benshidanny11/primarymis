@@ -40,13 +40,13 @@ router.get(
   PointsController.getBysubjects
 );
 router.get(
-  "/AllInterm/:levelid/:subjectname",
+  "/AllInterm/:levelid/:subjectname/:term",
   Auth.verifyToken,
   userMiddleWare[1],
   PointsController.getBysubjectsInTerm
 );
 router.get(
-  "/studentspoints/:studentid",
+  "/studentspoints/:studentid/:term",
   Auth.verifyToken,
   PointsController.getByStudentInTerm
 );
@@ -57,7 +57,7 @@ router.get(
 );
 router.get("/classAll/:classid", Auth.verifyToken, PointsController.getByClass);
 router.get(
-  "/classAllInTerm/:classid",
+  "/classAllInTerm/:classid/:term",
   Auth.verifyToken,
   PointsController.getByClassInTerm
 );

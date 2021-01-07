@@ -75,7 +75,7 @@ class PointsController {
   }
   // getting all points from database by subjects in term
   async getBysubjectsInTerm(req, res) {
-    PointsServices.getBysubjectsInTerm([req.params.levelid,req.params.subjectname,req.body.term])
+    PointsServices.getBysubjectsInTerm([req.params.levelid,req.params.subjectname,req.params.term])
       .then((result) => {
         res.status(result.status).send({
           status: result.status,
@@ -91,7 +91,7 @@ class PointsController {
   }
   // getting all points from database by students in term
   async getByStudentInTerm(req, res) {
-    PointsServices.getByStudentInTerm([req.params.studentid,req.body.term])
+    PointsServices.getByStudentInTerm([req.params.studentid,req.params.term])
       .then((result) => {
         res.status(result.status).send({
           status: result.status,
@@ -139,7 +139,7 @@ class PointsController {
   }
   // getting all points from database by students
   async getByClassInTerm(req, res) {
-    PointsServices.getByClassInTerm([req.params.classid,req.body.term])
+    PointsServices.getByClassInTerm([req.params.classid,req.params.term])
       .then((result) => {
         res.status(result.status).send({
           status: result.status,

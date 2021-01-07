@@ -24,7 +24,7 @@ export const addExamPoint = `UPDATE points
 	SET exam=$1
     WHERE levelid = $2 and subjectname = $3 and studentid =$4`;
 
-export const getBysubjects = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, exam,term, students.studentid, teacherid,catMax,examMax,studentNames,levelName
+export const getBysubjects = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, exam,term, students.studentid, teacherid,catMax,examMax,studentNames,regestrationNumber,levelName
     FROM points inner join students 
     on students.studentid = points.studentid 
     inner join subjects 
