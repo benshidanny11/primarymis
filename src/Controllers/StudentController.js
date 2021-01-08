@@ -91,7 +91,7 @@ class Students {
   async getAllByLevel(req, res) {
     StudentServices.getAllByLevel([
       req.params.levelid,
-      moment(new Date()).year(),
+      req.params.year,
     ])
       .then((students) => {
         res.status(students.status).send({

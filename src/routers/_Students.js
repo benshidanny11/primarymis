@@ -29,7 +29,7 @@ router.delete(
   StudentController.deleteStudent
 );
 router.get(
-  "/students/:levelid",
+  "/students/:levelid/:year",
   Auth.verifyToken,
   StudentController.getAllByLevel
 );
