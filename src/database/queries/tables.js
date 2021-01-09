@@ -15,7 +15,7 @@ export const createlevelTable = `CREATE TABLE IF NOT EXISTS levels(levelId SERIA
     levelName VARCHAR(100) NOT NULL UNIQUE,
     status VARCHAR(10) NOT NULL)`;
 export const createPositionTable = `CREATE TABLE IF NOT EXISTS positions(studentid INTEGER,
-                 term varchar(10), levelid INTEGER, totalmarks FLOAT,  PRIMARY KEY(studentid,term,levelid))`;
+                 term varchar(10), levelid INTEGER, totalmarks FLOAT, year varchar(50) not null,PRIMARY KEY(studentid,term,levelid,year))`;
 
 export const createClassTable = `CREATE TABLE IF NOT EXISTS class(classId  SERIAL PRIMARY KEY, 
     className VARCHAR(100) NOT NULL UNIQUE,teacherID integer not null UNIQUE,

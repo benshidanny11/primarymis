@@ -30,30 +30,35 @@ router.put(
   pointsMiddleWare.isUpdateExamMaxOut,
   PointsController.update
 );
+//get point of subject in year
 router.get(
-  "/all/:levelid/:subjectname",
+  "/all/:levelid/:subjectname/:year",
   Auth.verifyToken,
   PointsController.getBysubjects
 );
+// get subject marks in specfied academic year and term
 router.get(
-  "/AllInterm/:levelid/:subjectname/:term",
+  "/AllInterm/:levelid/:subjectname/:term/:year",
   Auth.verifyToken,
-  userMiddleWare[1],
   PointsController.getBysubjectsInTerm
 );
+//get student points in term for specific academic year
 router.get(
-  "/studentspoints/:studentid/:levelid/:term",
+  "/studentspoints/:studentid/:levelid/:term/:year",
    Auth.verifyToken,
   PointsController.getByStudentInTerm
 );
+//get students points in year
 router.get(
-  "/studentsAll/:studentid",
+  "/studentsAll/:studentid/:year",
   Auth.verifyToken,
   PointsController.getByStudents
 );
-router.get("/classAll/:classid", Auth.verifyToken, PointsController.getByClass);
+router.get("/classAll/:classid/:year", 
+Auth.verifyToken, 
+PointsController.getByClass);
 router.get(
-  "/classAllInTerm/:classid/:term",
+  "/classAllInTerm/:classid/:term/:year",
   Auth.verifyToken,
   PointsController.getByClassInTerm
 );

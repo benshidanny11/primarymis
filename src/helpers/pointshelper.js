@@ -14,15 +14,15 @@ import {
 import db from "../database/connection/query";
 
 export const getReportSumationInTerm = async (payload) => {
-  let sumCatOnePerTerm = await db.query(catOneSumPerTerm, [payload[0],payload[1],payload[2]]);
+  let sumCatOnePerTerm = await db.query(catOneSumPerTerm, [payload[0],payload[1],payload[2],payload[4]]);
   if (sumCatOnePerTerm) {
-    let sumCatTwoPerTerm = await db.query(catTwoSumPerTerm, [payload[0],payload[1],payload[2]]);
+    let sumCatTwoPerTerm = await db.query(catTwoSumPerTerm, [payload[0],payload[1],payload[2],payload[4]]);
     if (sumCatTwoPerTerm) {
-      let examSumPerTermRes = await db.query(examSumPerTerm, [payload[0],payload[1],payload[2]]);
+      let examSumPerTermRes = await db.query(examSumPerTerm, [payload[0],payload[1],payload[2],payload[4]]);
       if (examSumPerTermRes) {
         let maxkMarksRes = await db.query(maxMarks,[payload[1]]);
         if (maxkMarksRes) {
-          const classIdRes = await db.query(getStudentClass, [payload[0]]);
+          const classIdRes = await db.query(getStudentClass, [payload[0],payload[4]]);
           console.log(classIdRes.rows[0]);
           const positionsByClass = await db.query(getPositionsByClassInTerm, [
             payload[2],
@@ -74,13 +74,13 @@ export const getReportSumationInYear = async (payload) => {
     if (sumCatTwoPerYear) {
       let examSumResPerYear = await db.query(examSumPerYear, payload);
       if (examSumResPerYear) {
-        let maxkMarksRes = await db.query(maxMarks);
+        let maxkMarksRes = await db.query(maxMarks,[payload[1]]);
         if (maxkMarksRes) {
-          const classIdRes = await db.query(getStudentClass, [payload[0]]);
+          const classIdRes = await db.query(getStudentClass, [payload[0],payload[2]]);
           const anualPositions = await db.query(getPositionsByClassInYear, [
-            classIdRes.rows[0].classid,
+            classIdRes.rows[0].classid,payload[2]
           ]);
-          console.log(maxkMarksRes.rows[0]);
+          console.log( classIdRes.rows[0].classid);
 
           //{ catmax: '210', exammax: '280', totalmax: '490' }
           const average =

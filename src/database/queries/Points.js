@@ -3,11 +3,11 @@ export const create = `INSERT INTO points(
 	levelid, subjectname, catone, cattwo, exam, studentid, teacherid,term,year)
     VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9) returning *`;
 export const createPosition = `INSERT INTO positions(
-        studentid, term, levelid, totalmarks)
-        VALUES ($1, $2, $3, $4) returning *`;
+        studentid, term, levelid, totalmarks,year)
+        VALUES ($1, $2, $3, $4,$5) returning *`;
 export const updatePositions = `UPDATE positions
         SET totalmarks=$1
-        WHERE studentid = $2 and term = $3 and  levelid=$4 returning *`;
+        WHERE studentid = $2 and term = $3 and  levelid=$4 and year=$5 returning *`;
 
 export const update = `UPDATE points
 	SET catone=$1, cattwo=$2, exam=$3
@@ -30,11 +30,11 @@ export const getBysubjects = `SELECT subjects.levelid, subjects.subjectname, cat
     on levels.levelid 
     = points.levelid 
     WHERE points.levelid 
-    = $1 and points.subjectname = $2`;
+    = $1 and points.subjectname = $2 and points.year = $3`;
 
 export const getByStudent = `SELECT subjects.levelid, 
     subjects.subjectname, catone,term,
-    cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term
+    cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term,year
     FROM points inner join students 
     on students.studentid = points.studentid 
     inner join subjects 
@@ -45,10 +45,14 @@ export const getByStudent = `SELECT subjects.levelid,
     on levels.levelid 
     = points.levelid
     WHERE points.studentid 
-    = $1`;
-export const getByClass = `SELECT subjects.levelid, subjects.subjectname, catone,term, cattwo, exam, st.studentid, teacherid,catMax,examMax,studentNames,levelName,classid
+    = $1 and points.year=$2`;
+export const getByClass = `SELECT subjects.levelid, subjects.subjectname, 
+catone,term, cattwo, exam, st.studentid, teacherid,catMax,examMax,
+studentNames,levelName,classid,points.year
     FROM points inner join students as st
-    on st.studentid = points.studentid inner join student_class as sc on st.studentid = sc.studentid
+    on st.studentid = points.studentid 
+    inner join student_class as 
+    sc on st.studentid = sc.studentid
     inner join subjects 
     on subjects.subjectname = points.subjectname 
     and subjects.levelid 
@@ -56,7 +60,7 @@ export const getByClass = `SELECT subjects.levelid, subjects.subjectname, catone
     inner join levels 
     on levels.levelid 
     = points.levelid 
-   WHERE sc.classid = $1`;
+   WHERE sc.classid = $1 and points.year =$2`;
 
 export const getBysubjectsInTerm = `SELECT subjects.levelid, 
    subjects.subjectname, catone,
@@ -71,16 +75,16 @@ export const getBysubjectsInTerm = `SELECT subjects.levelid,
    on levels.levelid 
    = points.levelid 
    WHERE points.levelid 
-   = $1 and points.subjectname = $2 and points.term = $3`;
+   = $1 and points.subjectname = $2 and points.term = $3 and points.year = $4`;
 
 export const getByStudentInTerm = `SELECT studentNames,regestrationnumber,points.levelid, points.subjectname, catone, cattwo, exam, points.studentid, points.teacherid,
-term,catMax,examMax
+term,catMax,examMax,points.year
 	FROM public.points inner join subjects  on subjects.subjectname = points.subjectname 
 and subjects.levelid 
 =points.levelid inner join students 
 on students.studentid = points.studentid 
 WHERE points.studentid 
-= $1 and points.levelid = $2 and points.term = $3`;
+= $1 and points.levelid = $2 and points.term = $3 and points.year = $4`;
 export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo,term,
    exam, st.studentid, teacherid,catMax,examMax,studentNames,
    levelName,classid,term
@@ -93,23 +97,24 @@ export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, 
    inner join levels 
    on levels.levelid 
    = points.levelid 
-  WHERE sc.classid = $1 and points.term = $2`;
+  WHERE sc.classid = $1 and points.term = $2 and points.year=$3`;
 
   //export const getPositionsByClass = `SELECT * from position WHERE classid = $1`;
-  export const checkIfItsNoFirst = `SELECT * from positions WHERE studentid =$1 and levelid=$2 and term=$3`;
+  export const checkIfItsNoFirst = `SELECT * from positions WHERE studentid =$1 and levelid=$2 and term=$3 and year=$4`;
   export const getPositionsByClassInTerm = `SELECT * from positions inner join student_class on positions.studentid=student_class.studentid inner join  class on class.classid=student_class.classid WHERE term=$1 and class.classid=$2`;
 
-  export const getPositionsByClassInYear=`SELECT DISTINCT ON (studentid)  positions.studentid,sum(totalmarks) as anualtotal FROM positions inner join student_class on positions.studentid=student_class.studentid  inner join  class on class.classid=student_class.classid WHERE class.classid=$1
+  export const getPositionsByClassInYear=`SELECT DISTINCT ON (studentid)  positions.studentid,sum(totalmarks) as anualtotal FROM positions inner join student_class on positions.studentid=student_class.studentid  inner join  class on class.classid=student_class.classid 
+  WHERE class.classid=$1 and positions.year = $2
   group by positions.studentid`;
-  export const totalStudentMarks = `SELECT sum(catone+cattwo+exam)  as totalStudentMarks FROM points where studentid=$1 and levelid=$2 and term=$3`;
-  export const getStudentClass=`select student_class.classid  from student_class  where student_class.studentid=$1`;
+  export const totalStudentMarks = `SELECT sum(catone+cattwo+exam)  as totalStudentMarks FROM points where studentid=$1 and levelid=$2 and term=$3 and year=$4`;
+  export const getStudentClass=`select student_class.classid  from student_class  where student_class.studentid=$1 and student_class.year=$2`;
 
-export const catOneSumPerTerm = `SELECT sum(catone) as catoneSumInTerm FROM points where studentid=$1 and levelid=$2 and term=$3`;
-export const catOneSumPerYear = `SELECT sum(catone) as catoneSumInYer FROM points where studentid=$1 and levelid=$2`;
-export const catTwoSumPerTerm = `SELECT sum(cattwo) as cattwoSumInTerm FROM points where studentid=$1 and levelid=$2 and term=$3`;
-export const catTwoSumPerYear = `SELECT sum(cattwo) as cattwoSumInYear FROM points where studentid=$1 and levelid=$2`;
-export const examSumPerTerm = `SELECT sum(exam)  as examSumPerTerm FROM points where studentid=$1 and levelid=$2 and term=$3`;
-export const examSumPerYear = `SELECT sum(exam)  as examSumPerYear FROM points where studentid=$1 and levelid=$2`;
+export const catOneSumPerTerm = `SELECT sum(catone) as catoneSumInTerm FROM points where studentid=$1 and levelid=$2 and term=$3 and year=$4`;
+export const catOneSumPerYear = `SELECT sum(catone) as catoneSumInYer FROM points where studentid=$1 and levelid=$2 and year=$3`;
+export const catTwoSumPerTerm = `SELECT sum(cattwo) as cattwoSumInTerm FROM points where studentid=$1 and levelid=$2 and term=$3 and year=$4`;
+export const catTwoSumPerYear = `SELECT sum(cattwo) as cattwoSumInYear FROM points where studentid=$1 and levelid=$2 and year=$3`;
+export const examSumPerTerm = `SELECT sum(exam)  as examSumPerTerm FROM points where studentid=$1 and levelid=$2 and term=$3 and year=$4`;
+export const examSumPerYear = `SELECT sum(exam)  as examSumPerYear FROM points where studentid=$1 and levelid=$2 and year=$3`;
 export const maxMarks = `SELECT sum(catmax) as catmax, sum(exammax) as exammax, sum(catmax+exammax) as totalmax from subjects where levelid=$1`;
 export const avoidDuplicates = `SELECT * FROM points WHERE studentid =$1 and levelid=$2 and subjectname=$3 and term=$4 and year=$5`;
 export const checkIfCatMaxIsOut=`SELECT catmax from subjects where subjectname=$1 and levelid=$2 and status='1'`;

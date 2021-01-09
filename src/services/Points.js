@@ -22,16 +22,16 @@ class Points {
   async create(data) {
     let points = await db.query(create, data);
     if (points) {
-      const {studentid,levelid,term}=points.rows[0];
-      const totalStudentMarksRes=await db.query(totalStudentMarks,[data[5],data[0],term]);
+      const {studentid,levelid,term,year}=points.rows[0];
+      const totalStudentMarksRes=await db.query(totalStudentMarks,[data[5],data[0],term,year]);
     
       
       const {totalstudentmarks:totalstudentmarks1}=totalStudentMarksRes.rows[0];
-      let itsNotFrst=await db.query(checkIfItsNoFirst,[studentid,levelid,term]);
+      let itsNotFrst=await db.query(checkIfItsNoFirst,[studentid,levelid,term,year]);
       if(itsNotFrst.rows[0]){
        //Udate her
        const martsToUpdate=totalstudentmarks1;
-       const positonsUpdate=await  db.query(updatePositions,[martsToUpdate,studentid,term,levelid]);
+       const positonsUpdate=await  db.query(updatePositions,[martsToUpdate,studentid,term,levelid,year]);
        if(positonsUpdate.rowCount){
         return {
           status: 200,
@@ -47,7 +47,7 @@ class Points {
   
       }else{
         const marksToCreate=totalstudentmarks1;
-        const positonsCreate=await  db.query(createPosition,[data[5],data[7],data[0],marksToCreate]);
+        const positonsCreate=await  db.query(createPosition,[data[5],data[7],data[0],marksToCreate,data[8]]);
         if(positonsCreate.rows[0]){
           return {
             status: 200,
@@ -136,8 +136,9 @@ class Points {
   }
   async getByStudent(data) {
     let points = await db.query(getByStudent, data);
-    const {studentid,levelid}=points.rows[0];
-    const marksReport=await getReportSumationInYear([studentid,levelid]);
+    // console.log(points.rows[0])
+    const {studentid,levelid,year}=points.rows[0];
+    const marksReport=await getReportSumationInYear([studentid,levelid,year]);
     points.rows.push(marksReport);
     if (points.rowCount) {
       return {
@@ -191,9 +192,9 @@ class Points {
     if (points.rowCount) {
 
 
-      const {studentid,levelid,term,subjectname}=points.rows[0];
+      const {studentid,levelid,term,subjectname,year}=points.rows[0];
  
-      const marksReport=await getReportSumationInTerm([studentid,levelid,term,subjectname]);
+      const marksReport=await getReportSumationInTerm([studentid,levelid,term,subjectname,year]);
       points.rows.push(marksReport);
   
       return {
