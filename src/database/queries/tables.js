@@ -46,7 +46,8 @@ export const createPointTable = `CREATE TABLE IF NOT EXISTS points(
     studentId integer not null,
     teacherId integer not null,
     term varchar(50) not null,
-    PRIMARY KEY(studentId,subjectName,levelID,term),
+    year varchar(50) not null,
+    PRIMARY KEY(studentId,subjectName,levelID,term,year),
     FOREIGN KEY(subjectName,levelID) REFERENCES subjects(subjectName,levelID) on delete cascade on update cascade,
     FOREIGN KEY(teacherID) REFERENCES users(userId) on delete cascade on update cascade,
     FOREIGN KEY(studentId) REFERENCES students(studentId ) on delete cascade on update cascade)`;

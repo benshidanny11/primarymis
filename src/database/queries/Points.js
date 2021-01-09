@@ -2,11 +2,6 @@ export const getAll = ``;
 export const create = `INSERT INTO points(
 	levelid, subjectname, catone, cattwo, exam, studentid, teacherid,term)
     VALUES ($1, $2, $3, $4, $5, $6, $7,$8) returning *`;
-
-/*
-    studentid INTEGER,
-                 term varchar(10), classid INTEGER, levelid INTEGER, totalmarks FLOAT,
-    */
 export const createPosition = `INSERT INTO positions(
         studentid, term, levelid, totalmarks)
         VALUES ($1, $2, $3, $4) returning *`;

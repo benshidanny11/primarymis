@@ -7,7 +7,7 @@ class Students {
       req.body.studentnames,
       req.body.parentsemail,
       req.body.parentsphonenumber,
-      regNumber,
+      moment(new Date()),
      req.year,
       "1",
     ];
