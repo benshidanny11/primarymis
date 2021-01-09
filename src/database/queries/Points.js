@@ -1,7 +1,7 @@
 export const getAll = ``;
 export const create = `INSERT INTO points(
-	levelid, subjectname, catone, cattwo, exam, studentid, teacherid,term)
-    VALUES ($1, $2, $3, $4, $5, $6, $7,$8) returning *`;
+	levelid, subjectname, catone, cattwo, exam, studentid, teacherid,term,year)
+    VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9) returning *`;
 export const createPosition = `INSERT INTO positions(
         studentid, term, levelid, totalmarks)
         VALUES ($1, $2, $3, $4) returning *`;
@@ -111,7 +111,7 @@ export const catTwoSumPerYear = `SELECT sum(cattwo) as cattwoSumInYear FROM poin
 export const examSumPerTerm = `SELECT sum(exam)  as examSumPerTerm FROM points where studentid=$1 and levelid=$2 and term=$3`;
 export const examSumPerYear = `SELECT sum(exam)  as examSumPerYear FROM points where studentid=$1 and levelid=$2`;
 export const maxMarks = `SELECT sum(catmax) as catmax, sum(exammax) as exammax, sum(catmax+exammax) as totalmax from subjects where levelid=$1`;
-export const avoidDuplicates = `SELECT * FROM points WHERE studentid =$1 and levelid=$2 and subjectname=$3 and term=$4`;
+export const avoidDuplicates = `SELECT * FROM points WHERE studentid =$1 and levelid=$2 and subjectname=$3 and term=$4 and year=$5`;
 export const checkIfCatMaxIsOut=`SELECT catmax from subjects where subjectname=$1 and levelid=$2 and status='1'`;
 export const checkIfExamMaxIsOut=`SELECT exammax from subjects where subjectname=$1 and levelid=$2 and status='1'`;
 export const getStudentWithoutMarks = `SELECT students.studentid, studentnames, parentsemail, 

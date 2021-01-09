@@ -1,7 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 import Joi from "@hapi/joi";
-import { join } from "lodash";
 
 const schemas = {};
 
@@ -189,6 +188,9 @@ schemas.createPoints=Joi.object().keys({
   ),
   term:Joi.number().min(1).required().label(
     "Term is required"
+  ),
+  year:Joi.string().required().label(
+    "academic year is required"
   ),
 });
 

@@ -11,6 +11,7 @@ class PointsController {
       req.body.studentid,
       req.body.teacherid,
       req.body.term,
+      req.body.year,
     ];
     PointsServices.create(values).then((results) => {
       if(results.status!==200){

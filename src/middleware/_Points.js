@@ -10,7 +10,7 @@ import { avoidDuplicates,checkIfCatMaxIsOut,checkIfExamMaxIsOut } from "../datab
 
 export default {
   avoidDuplicate: async (req, res, next) => {
-    const values= [req.body.studentid,req.body.levelid,req.body.subjectname,req.body.term];
+    const values= [req.body.studentid,req.body.levelid,req.body.subjectname,req.body.term,req.body.year];
     db.query(avoidDuplicates,values).then((pointRes) => {
       if (pointRes.rowCount) {
         res.status(400).send({
