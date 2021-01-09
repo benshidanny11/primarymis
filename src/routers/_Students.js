@@ -8,8 +8,8 @@ const router = express.Router();
 router.post(
   "/create",
    Validator("registerStudent"),
-  // Auth.verifyToken,
-  // userMiddleWare[5],
+  Auth.verifyToken,
+  userMiddleWare[5],
    Student.checkStudent,
   StudentController.regesterStudent
 );
