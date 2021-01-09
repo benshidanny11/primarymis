@@ -91,7 +91,7 @@ class PointsController {
   }
   // getting all points from database by students in term
   async getByStudentInTerm(req, res) {
-    PointsServices.getByStudentInTerm([req.params.studentid,req.params.term])
+    PointsServices.getByStudentInTerm([req.params.studentid,req.params.levelid,req.params.term])
       .then((result) => {
         res.status(result.status).send({
           status: result.status,

@@ -14,7 +14,7 @@ router.post(
   StudentController.regesterStudent
 );
 router.put(
-  "/update/:id",
+  "/update/:id/:year",
   Validator("registerStudent"),
   Auth.verifyToken,
   userMiddleWare[5],

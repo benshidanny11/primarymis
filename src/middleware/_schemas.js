@@ -102,6 +102,11 @@ schemas.registerStudent = Joi.object().keys({
     .label(
       "Student class is required!"
     ),
+    year: Joi.string()
+    .required()
+    .label(
+      " academic year is required!"
+    ),
 });
 schemas.createSubject = Joi.object().keys({
   subjectname: Joi.string()

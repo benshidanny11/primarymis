@@ -8,11 +8,11 @@ class Students {
       req.body.parentsemail,
       req.body.parentsphonenumber,
       regNumber,
-      moment(new Date()),
+     req.year,
       "1",
     ];
-    const levelsValues = [req.body.levelid, moment(new Date()).year()];
-    const classValues = [req.body.classid, moment(new Date()).year()];
+    const levelsValues = [req.body.levelid, req.year];
+    const classValues = [req.body.classid, req.year];
     StudentServices.create(values)
       .then((student) => {
         levelsValues.unshift(student.student.rows[0].studentid);
@@ -41,6 +41,18 @@ class Students {
       req.body.parentsphonenumber,
       req.params.id,
     ];
+    const studentLevel = [ 
+      req.body.levelid,
+      req.body.year,
+      req.params.id,
+      req.params.year,
+    ]
+    const studentclass = [
+      req.body.classid,
+      req.body.year,
+      req.params.id,
+      req.params.year,
+    ]
     StudentServices.update(values)
       .then((student) => {
         res.status(student.status).send({
@@ -54,6 +66,18 @@ class Students {
           status: 400,
           error: err.message,
         });
+      });
+      // updating student level
+      StudentServices.UpdateStudentLevel(studentLevel).then(() => {
+        console.log('level updated')
+      }).catch((err) => {
+        console.log(err.message)
+      });
+      // updating student class
+      StudentServices.UpdateStudentClass(studentclass).then(() => {
+        console.log('class updated')
+      }).catch((err) => {
+        console.log(err.message)
       });
   }
   async deleteStudent(req, res) {

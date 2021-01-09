@@ -191,9 +191,9 @@ class Points {
     if (points.rowCount) {
 
 
-      const {studentid,levelid,term}=points.rows[0];
+      const {studentid,levelid,term,subjectname}=points.rows[0];
  
-      const marksReport=await getReportSumationInTerm([studentid,levelid,term]);
+      const marksReport=await getReportSumationInTerm([studentid,levelid,term,subjectname]);
       points.rows.push(marksReport);
   
       return {

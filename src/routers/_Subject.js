@@ -9,7 +9,7 @@ router.post(
   "/create",
   Validator("createSubject"),
   Auth.verifyToken,
-  //Auth.notTeacher,
+  userMiddleWare[5],
   Subject.checkSubjects,
   SubjectController.addSubject
 );

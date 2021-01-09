@@ -14,13 +14,13 @@ import {
 import db from "../database/connection/query";
 
 export const getReportSumationInTerm = async (payload) => {
-  let sumCatOnePerTerm = await db.query(catOneSumPerTerm, payload);
+  let sumCatOnePerTerm = await db.query(catOneSumPerTerm, [payload[0],payload[1],payload[2]]);
   if (sumCatOnePerTerm) {
-    let sumCatTwoPerTerm = await db.query(catTwoSumPerTerm, payload);
+    let sumCatTwoPerTerm = await db.query(catTwoSumPerTerm, [payload[0],payload[1],payload[2]]);
     if (sumCatTwoPerTerm) {
-      let examSumPerTermRes = await db.query(examSumPerTerm, payload);
+      let examSumPerTermRes = await db.query(examSumPerTerm, [payload[0],payload[1],payload[2]]);
       if (examSumPerTermRes) {
-        let maxkMarksRes = await db.query(maxMarks);
+        let maxkMarksRes = await db.query(maxMarks,[payload[1]]);
         if (maxkMarksRes) {
           const classIdRes = await db.query(getStudentClass, [payload[0]]);
           console.log(classIdRes.rows[0]);

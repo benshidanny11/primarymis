@@ -78,20 +78,14 @@ export const getBysubjectsInTerm = `SELECT subjects.levelid,
    WHERE points.levelid 
    = $1 and points.subjectname = $2 and points.term = $3`;
 
-export const getByStudentInTerm = `SELECT subjects.levelid, 
-   subjects.subjectname, catone, cattwo, exam, students.studentid, 
-   teacherid,catMax,examMax,studentNames,levelName,term
-   FROM points inner join students 
-   on students.studentid = points.studentid 
-   inner join subjects 
-   on subjects.subjectname = points.subjectname 
-   and subjects.levelid 
-   =points.levelid 
-   inner join levels 
-   on levels.levelid 
-   = points.levelid 
-   WHERE points.studentid 
-   = $1 and points.term = $2`;
+export const getByStudentInTerm = `SELECT studentNames,regestrationnumber,points.levelid, points.subjectname, catone, cattwo, exam, points.studentid, points.teacherid,
+term,catMax,examMax
+	FROM public.points inner join subjects  on subjects.subjectname = points.subjectname 
+and subjects.levelid 
+=points.levelid inner join students 
+on students.studentid = points.studentid 
+WHERE points.studentid 
+= $1 and points.levelid = $2 and points.term = $3`;
 export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo,term,
    exam, st.studentid, teacherid,catMax,examMax,studentNames,
    levelName,classid,term
@@ -121,7 +115,7 @@ export const catTwoSumPerTerm = `SELECT sum(cattwo) as cattwoSumInTerm FROM poin
 export const catTwoSumPerYear = `SELECT sum(cattwo) as cattwoSumInYear FROM points where studentid=$1 and levelid=$2`;
 export const examSumPerTerm = `SELECT sum(exam)  as examSumPerTerm FROM points where studentid=$1 and levelid=$2 and term=$3`;
 export const examSumPerYear = `SELECT sum(exam)  as examSumPerYear FROM points where studentid=$1 and levelid=$2`;
-export const maxMarks = `SELECT sum(catmax) as catmax, sum(exammax) as exammax, sum(catmax+exammax) as totalmax from subjects`;
+export const maxMarks = `SELECT sum(catmax) as catmax, sum(exammax) as exammax, sum(catmax+exammax) as totalmax from subjects where levelid=$1`;
 export const avoidDuplicates = `SELECT * FROM points WHERE studentid =$1 and levelid=$2 and subjectname=$3 and term=$4`;
 export const checkIfCatMaxIsOut=`SELECT catmax from subjects where subjectname=$1 and levelid=$2 and status='1'`;
 export const checkIfExamMaxIsOut=`SELECT exammax from subjects where subjectname=$1 and levelid=$2 and status='1'`;

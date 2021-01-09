@@ -7,6 +7,9 @@ export const update = `UPDATE students
 export const createStudentLevel = `INSERT INTO student_level(
 		studentid, levelid, year)
 		VALUES ($1, $2, $3)`;
+export const UpdateStudentLevel = `UPDATE student_level
+	SET levelid=$1, year=$2
+	WHERE studentid = $3 and year = $4`;
 export const deleteStudent = `UPDATE students
 		SET status=$1
 		WHERE studentid = $2`;
@@ -30,7 +33,9 @@ student_level on students.studentid
 export const createStudentClass =`INSERT INTO student_class(
 	studentid, classid, year)
 	VALUES ($1, $2, $3)`;
-
+	export const UpdateStudentClass = `UPDATE student_class
+	SET classid=$1, year=$2
+	WHERE studentid = $3 and year = $4`;
 	export const getAllByClass = `select students.studentid, studentnames, parentsemail, 
 	parentsphonenumber,levelname,classname,student_level.year,student_class.classid
 	from students inner join student_class on student_class.studentid = students.studentid inner join class on student_class.classid = class.classid

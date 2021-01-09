@@ -2,10 +2,6 @@ import express from "express";
 import PointsController from "../Controllers/PointsController";
 import Validator from "../middleware/_validator";
 import pointsMiddleWare from "../middleware/_Points";
-
-import db from "../database/connection/query";
-
-
 import Auth from "../middleware/Auth";
 import userMiddleWare from "../middleware/user";
 const router = express.Router();
@@ -46,8 +42,8 @@ router.get(
   PointsController.getBysubjectsInTerm
 );
 router.get(
-  "/studentspoints/:studentid/:term",
-  Auth.verifyToken,
+  "/studentspoints/:studentid/:levelid/:term",
+   Auth.verifyToken,
   PointsController.getByStudentInTerm
 );
 router.get(
