@@ -9,8 +9,8 @@ const router = express.Router();
 router.post(
   "/create",
   Validator("createPoints"),
-  // Auth.verifyToken,
-  // userMiddleWare[1],
+  Auth.verifyToken,
+  userMiddleWare[1],
   pointsMiddleWare.isTeacherExist,
   pointsMiddleWare.isStudentExist,
   pointsMiddleWare.isLevelExists,
