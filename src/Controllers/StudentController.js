@@ -7,12 +7,12 @@ class Students {
       req.body.studentnames,
       req.body.parentsemail,
       req.body.parentsphonenumber,
+      regNumber,
       moment(new Date()),
-     req.year,
       "1",
     ];
-    const levelsValues = [req.body.levelid, req.year];
-    const classValues = [req.body.classid, req.year];
+    const levelsValues = [req.body.levelid, req.body.year];
+    const classValues = [req.body.classid, req.body.year];
     StudentServices.create(values)
       .then((student) => {
         levelsValues.unshift(student.student.rows[0].studentid);
