@@ -102,7 +102,7 @@ export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, 
   //export const getPositionsByClass = `SELECT * from position WHERE classid = $1`;
   export const checkIfItsNoFirst = `SELECT * from positions WHERE studentid =$1 and levelid=$2 and term=$3 and year=$4`;
   export const getPositionsByClassInTerm = `SELECT * from positions inner join student_class on positions.studentid=student_class.studentid inner join  class on class.classid=student_class.classid WHERE term=$1 and class.classid=$2`;
-
+  export const getNumberOfStudentsInClass=` SELECT classname,count(*) as numberOfStudentsInClass  from student_class  inner join  class on class.classid=student_class.classid WHERE class.classid=$1 group by classname;`
   export const getPositionsByClassInYear=`SELECT DISTINCT ON (studentid)  positions.studentid,sum(totalmarks) as anualtotal FROM positions inner join student_class on positions.studentid=student_class.studentid  inner join  class on class.classid=student_class.classid 
   WHERE class.classid=$1 and positions.year = $2
   group by positions.studentid`;

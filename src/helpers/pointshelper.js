@@ -10,20 +10,38 @@ import {
   getPositionsByClassInTerm,
   getStudentClass,
   getPositionsByClassInYear,
+  getNumberOfStudentsInClass,
 } from "../database/queries/Points";
 import db from "../database/connection/query";
 
 export const getReportSumationInTerm = async (payload) => {
-  let sumCatOnePerTerm = await db.query(catOneSumPerTerm, [payload[0],payload[1],payload[2],payload[4]]);
+  let sumCatOnePerTerm = await db.query(catOneSumPerTerm, [
+    payload[0],
+    payload[1],
+    payload[2],
+    payload[4],
+  ]);
   if (sumCatOnePerTerm) {
-    let sumCatTwoPerTerm = await db.query(catTwoSumPerTerm, [payload[0],payload[1],payload[2],payload[4]]);
+    let sumCatTwoPerTerm = await db.query(catTwoSumPerTerm, [
+      payload[0],
+      payload[1],
+      payload[2],
+      payload[4],
+    ]);
     if (sumCatTwoPerTerm) {
-      let examSumPerTermRes = await db.query(examSumPerTerm, [payload[0],payload[1],payload[2],payload[4]]);
+      let examSumPerTermRes = await db.query(examSumPerTerm, [
+        payload[0],
+        payload[1],
+        payload[2],
+        payload[4],
+      ]);
       if (examSumPerTermRes) {
-        let maxkMarksRes = await db.query(maxMarks,[payload[1]]);
+        let maxkMarksRes = await db.query(maxMarks, [payload[1]]);
         if (maxkMarksRes) {
-          const classIdRes = await db.query(getStudentClass, [payload[0],payload[4]]);
-          console.log(classIdRes.rows[0]);
+          const classIdRes = await db.query(getStudentClass, [
+            payload[0],
+            payload[4],
+          ]);
           const positionsByClass = await db.query(getPositionsByClassInTerm, [
             payload[2],
             classIdRes.rows[0].classid,
@@ -34,6 +52,12 @@ export const getReportSumationInTerm = async (payload) => {
               examSumPerTermRes.rows[0].examsumperterm) *
               100) /
             maxkMarksRes.rows[0].totalmax;
+          const numberOfStudents = await db.query(
+            getNumberOfStudentsInClass,
+            [classIdRes.rows[0].classid]
+          );
+          const studentsInClass=numberOfStudents.rows[0].numberofstudentsinclass;
+          const classname=numberOfStudents.rows[0].classname;
           return {
             report: {
               catOneSumInTerm: sumCatOnePerTerm.rows[0].catonesuminterm,
@@ -42,6 +66,8 @@ export const getReportSumationInTerm = async (payload) => {
               maxMarks: maxkMarksRes.rows[0],
               average,
               position: getStudentPosition(positionsByClass.rows, payload[0]),
+              studentsInClass,
+              classname
             },
           };
         } else {
@@ -74,13 +100,17 @@ export const getReportSumationInYear = async (payload) => {
     if (sumCatTwoPerYear) {
       let examSumResPerYear = await db.query(examSumPerYear, payload);
       if (examSumResPerYear) {
-        let maxkMarksRes = await db.query(maxMarks,[payload[1]]);
+        let maxkMarksRes = await db.query(maxMarks, [payload[1]]);
         if (maxkMarksRes) {
-          const classIdRes = await db.query(getStudentClass, [payload[0],payload[2]]);
-          const anualPositions = await db.query(getPositionsByClassInYear, [
-            classIdRes.rows[0].classid,payload[2]
+          const classIdRes = await db.query(getStudentClass, [
+            payload[0],
+            payload[2],
           ]);
-          console.log( classIdRes.rows[0].classid);
+          const anualPositions = await db.query(getPositionsByClassInYear, [
+            classIdRes.rows[0].classid,
+            payload[2],
+          ]);
+          console.log(classIdRes.rows[0].classid);
 
           //{ catmax: '210', exammax: '280', totalmax: '490' }
           const average =
@@ -94,11 +124,14 @@ export const getReportSumationInYear = async (payload) => {
               catOneSumInTerm: sumCatOnePerYear.rows[0].catonesuminyer,
               catTwoSumInTerm: sumCatTwoPerYear.rows[0].cattwosuminyear,
               examSumInTerm: examSumResPerYear.rows[0].examsumperyear,
-              totalMarksPerYear:sumCatOnePerYear.rows[0].catonesuminyer +sumCatTwoPerYear.rows[0].cattwosuminyear + examSumResPerYear.rows[0].examsumperyear ,
+              totalMarksPerYear:
+                sumCatOnePerYear.rows[0].catonesuminyer +
+                sumCatTwoPerYear.rows[0].cattwosuminyear +
+                examSumResPerYear.rows[0].examsumperyear,
               maxMarks: {
                 maxCatMarksPerYer: maxkMarksRes.rows[0].catmax * 3,
                 maxExamMarksPerYer: maxkMarksRes.rows[0].exammax * 3,
-                maxTotalMarksPerYer:maxkMarksRes.rows[0].totalmax*3
+                maxTotalMarksPerYer: maxkMarksRes.rows[0].totalmax * 3,
               },
               average,
               position: getStudentPosition(anualPositions.rows, payload[0]),
