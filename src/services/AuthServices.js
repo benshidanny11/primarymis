@@ -12,6 +12,7 @@ import {
   getByRole,
   hideuser,
   updatePassword,
+  searchUser,
 } from "../database/queries/User";
 
 class AuthService {
@@ -134,6 +135,23 @@ class AuthService {
   // find user by id
   async findById(data) {
     let user = await db.query(getById, data);
+    if (user.rowCount) {
+      return {
+        status: 200,
+        message: "user found",
+        user: user,
+      };
+    } else {
+      return {
+        status: 400,
+        message: "user not found",
+        user: [],
+      };
+    }
+  }
+
+  async searchUser(data){
+    let user = await db.query(searchUser, data);
     if (user.rowCount) {
       return {
         status: 200,

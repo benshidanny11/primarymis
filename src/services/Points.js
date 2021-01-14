@@ -14,7 +14,8 @@ import {
   checkIfItsNoFirst,
   updatePositions,
   createPosition,
-  totalStudentMarks
+  totalStudentMarks,
+  searchPointByStudent,
 } from "../database/queries/Points";
 import {getReportSumationInTerm,getReportSumationInYear} from '../helpers/pointshelper';
 
@@ -215,6 +216,23 @@ class Points {
   }
   async getByClassInTerm(data) {
     let points = await db.query(getByClassInTerm, data);
+    if (points.rowCount) {
+      return {
+        status: 200,
+        message: "data found",
+        response: points,
+      };
+    } else {
+      return {
+        status: 400,
+        message: "data not found",
+        response: points,
+      };
+    }
+  }
+
+  async searchPointByStudent(data) {
+    let points = await db.query(searchPointByStudent, data);
     if (points.rowCount) {
       return {
         status: 200,

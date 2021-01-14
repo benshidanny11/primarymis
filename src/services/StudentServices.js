@@ -12,6 +12,7 @@ import {
   getOne,
   UpdateStudentLevel,
   UpdateStudentClass,
+  searchStudent,
 } from "../database/queries/Student";
 import random from "random";
 class StudentServices {
@@ -130,6 +131,23 @@ class StudentServices {
   //get one student
   async getOne(data) {
     let student = await db.query(getOne, data);
+    if (student.rowCount) {
+      return {
+        status: 200,
+        students: student,
+        message: "data found",
+      };
+    } else {
+      return {
+        status: 400,
+        message: "no data to display",
+        students: [],
+      };
+    }
+  }
+
+  async searchStudent(data) {
+    let student = await db.query(searchStudent, data);
     if (student.rowCount) {
       return {
         status: 200,

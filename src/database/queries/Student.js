@@ -23,7 +23,7 @@ inner join
 student_level on students.studentid 
 = student_level.studentid inner join levels on levels.levelid = student_level.levelid where students.studentid = $1 and student_level.year =$2`;
 export const getByLevel = `select students.studentid, studentnames, parentsemail,
-parentsphonenumber,levelname,classname,student_level.year,student_level.levelid
+parentsphonenumber,levelname,classname,student_level.year,student_level.levelid,regestrationNumber
 from students inner join student_class on student_class.studentid = students.studentid inner join class on student_class.classid = class.classid
 inner join
 student_level on students.studentid 
@@ -52,3 +52,12 @@ export const createStudentClass =`INSERT INTO student_class(
 // check student exist in database
 export const checkStudentExist = `select * from students where studentnames = $1 and parentsphonenumber = $2`;
 export const checkExistOnUpdate = `select * from students where studentnames = $1 and parentsphonenumber = $2 and studentid != $3`
+
+export const searchStudent = `select students.studentid, studentnames, parentsemail,
+parentsphonenumber,levelname,classname,student_level.year,student_level.levelid,regestrationNumber
+from students inner join student_class on student_class.studentid = students.studentid inner join class on student_class.classid = class.classid
+inner join
+student_level on students.studentid 
+= student_level.studentid inner join levels on levels.levelid =student_level.levelid where student_level.levelid 
+= $1 and students.status 
+= '1' and student_level.year =$2 and position(LOWER($3) in LOWER(studentnames) || LOWER(regestrationNumber))>0`;

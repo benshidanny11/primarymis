@@ -11,6 +11,18 @@ import {
   getStudentClass,
   getPositionsByClassInYear,
   getNumberOfStudentsInClass,
+  catOneSumPerTerm1,
+  catOneSumPerTerm2,
+  catOneSumPerTerm3,
+  catTwoSumPerTerm1,
+  catTwoSumPerTerm2,
+  catTwoSumPerTerm3,
+  examSumPerTerm1,
+  examSumPerTerm2,
+  examSumPerTerm3,
+  getPositionsByClassInTerm1,
+  getPositionsByClassInTerm2,
+  getPositionsByClassInTerm3,
 } from "../database/queries/Points";
 import db from "../database/connection/query";
 
@@ -52,12 +64,12 @@ export const getReportSumationInTerm = async (payload) => {
               examSumPerTermRes.rows[0].examsumperterm) *
               100) /
             maxkMarksRes.rows[0].totalmax;
-          const numberOfStudents = await db.query(
-            getNumberOfStudentsInClass,
-            [classIdRes.rows[0].classid]
-          );
-          const studentsInClass=numberOfStudents.rows[0].numberofstudentsinclass;
-          const classname=numberOfStudents.rows[0].classname;
+          const numberOfStudents = await db.query(getNumberOfStudentsInClass, [
+            classIdRes.rows[0].classid,
+          ]);
+          const studentsInClass =
+            numberOfStudents.rows[0].numberofstudentsinclass;
+          const classname = numberOfStudents.rows[0].classname;
           return {
             report: {
               catOneSumInTerm: sumCatOnePerTerm.rows[0].catonesuminterm,
@@ -67,7 +79,7 @@ export const getReportSumationInTerm = async (payload) => {
               average,
               position: getStudentPosition(positionsByClass.rows, payload[0]),
               studentsInClass,
-              classname
+              classname,
             },
           };
         } else {
@@ -102,6 +114,21 @@ export const getReportSumationInYear = async (payload) => {
       if (examSumResPerYear) {
         let maxkMarksRes = await db.query(maxMarks, [payload[1]]);
         if (maxkMarksRes) {
+          //Term 1 queries
+          let catOneSumPerTerm1Res = await db.query(catOneSumPerTerm1, payload);
+          let catTwoSumPerTerm1Res = await db.query(catTwoSumPerTerm2, payload);
+          let examSumPerTerm1Res = await db.query(examSumPerTerm1, payload);
+
+          //Term 2 queries
+          let catOneSumPerTerm2Res = await db.query(catOneSumPerTerm2, payload);
+          let catTwoSumPerTerm2Res = await db.query(catTwoSumPerTerm2, payload);
+          let examSumPerTerm2Res = await db.query(examSumPerTerm2, payload);
+
+          //Term 3 queries
+          let catOneSumPerTerm3Res = await db.query(catOneSumPerTerm3, payload);
+          let catTwoSumPerTerm3Res = await db.query(catTwoSumPerTerm2, payload);
+          let examSumPerTerm3Res = await db.query(examSumPerTerm3, payload);
+
           const classIdRes = await db.query(getStudentClass, [
             payload[0],
             payload[2],
@@ -110,7 +137,17 @@ export const getReportSumationInYear = async (payload) => {
             classIdRes.rows[0].classid,
             payload[2],
           ]);
-          console.log(classIdRes.rows[0].classid);
+
+          let positonTerm1Res = await db.query(getPositionsByClassInTerm1, [
+            classIdRes.rows[0].classid,
+          ]);
+          let positonTerm2Res = await db.query(getPositionsByClassInTerm2, [
+            classIdRes.rows[0].classid,
+          ]);
+          let positonTerm3Res = await db.query(getPositionsByClassInTerm3, [
+            classIdRes.rows[0].classid,
+          ]);
+          //  console.log(classIdRes.rows[0].classid);
 
           //{ catmax: '210', exammax: '280', totalmax: '490' }
           const average =
@@ -124,6 +161,27 @@ export const getReportSumationInYear = async (payload) => {
               catOneSumInTerm: sumCatOnePerYear.rows[0].catonesuminyer,
               catTwoSumInTerm: sumCatTwoPerYear.rows[0].cattwosuminyear,
               examSumInTerm: examSumResPerYear.rows[0].examsumperyear,
+              dataForTerms: {
+                term1: {
+                  catOneSum: catOneSumPerTerm1Res.rows[0],
+                  catTwoSum: catTwoSumPerTerm1Res.rows[0],
+                  examSum: examSumPerTerm1Res.rows[0],
+                  position: getStudentPosition(positonTerm1Res.rows,payload[0]),
+                },
+                term2: {
+                  catOneSum: catOneSumPerTerm2Res.rows[0],
+                  catTwoSum: catTwoSumPerTerm2Res.rows[0],
+                  examSum: examSumPerTerm2Res.rows[0],
+                  position: getStudentPosition(positonTerm2Res.rows,payload[0]),
+                },
+                term3: {
+                  catOneSum: catOneSumPerTerm3Res.rows[0],
+                  catTwoSum: catTwoSumPerTerm3Res.rows[0],
+                  examSum: examSumPerTerm1Re3.rows[0],
+                  position: getStudentPosition(positonTerm3Res.rows,payload[0]),
+                },
+              },
+
               totalMarksPerYear:
                 sumCatOnePerYear.rows[0].catonesuminyer +
                 sumCatTwoPerYear.rows[0].cattwosuminyear +

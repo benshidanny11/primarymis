@@ -38,5 +38,10 @@ router.get(
   Auth.verifyToken,
   StudentController.getAllByClass
 );
-router.get("/:studentid", Auth.verifyToken, StudentController.findById);
+router.get("/:studentid",
+ Auth.verifyToken, 
+StudentController.findById);
+router.get("/search/:levelid/:year/:searchData",
+ Auth.verifyToken, 
+StudentController.searchStudents);
 export default router;

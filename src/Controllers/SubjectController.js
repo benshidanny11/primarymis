@@ -115,5 +115,21 @@ class SubjectController {
         });
       });
   }
+  // search subject
+  async searchSubject(req, res) {
+    SubjectService.searchSubject([req.params.levelid,req.params.searchData])
+      .then((result) => {
+        res.status(result.status).send({
+          status: result.status,
+          message: result.message,
+          Subjects: result.response.rows,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          message: err.message,
+        });
+      });
+  }
 }
 export default new SubjectController();

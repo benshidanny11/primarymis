@@ -36,4 +36,10 @@ router.delete(
   userMiddleWare[5],
   SubjectController.deleteSubject
 );
+// search Subjects
+router.get(
+  "/search/:levelid/:searchData",
+  Auth.verifyToken,
+  SubjectController.searchSubject
+);
 export default router;

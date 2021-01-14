@@ -7,7 +7,8 @@ import {
   getByLevel,
   update,
   deleteSubject,
-  updateTecherSubject
+  updateTecherSubject,
+  searchSubject
 } from "../database/queries/Subjects";
 class SubjectService {
   async create(data) {
@@ -108,5 +109,22 @@ class SubjectService {
         }
     }
 }
+
+ async searchSubject(data) {
+    let Subjects = await db.query(searchSubject, data);
+    if (Subjects.rowCount) {
+      return {
+        status: 200,
+        message: "data found",
+        response: Subjects,
+      };
+    } else {
+      return {
+        status: 404,
+        message: "data not found",
+        response: Subjects,
+      };
+    }
+  }
 }
 export default new SubjectService();
