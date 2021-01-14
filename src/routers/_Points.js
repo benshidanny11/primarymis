@@ -62,5 +62,10 @@ router.get(
   Auth.verifyToken,
   PointsController.getByClassInTerm
 );
-
+// search points by students
+router.get(
+  "/search/:levelid/:subjectname/:term/:year/:searchData",
+  Auth.verifyToken,
+  PointsController.searchPointByStudent
+);
 export default router;

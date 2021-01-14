@@ -1,7 +1,7 @@
 import AuthController from "../Controllers/Auth";
 import Auth from "../middleware/Auth";
 import Validator from "../middleware/_validator";
-import userMiddleWare from '../middleware/user';
+import userMiddleWare from "../middleware/user";
 import express from "express";
 const router = express.Router();
 router.post(
@@ -12,7 +12,7 @@ router.post(
   userMiddleWare[4],
   AuthController.createAccount
 );
-router.post("/login",Validator("login"), AuthController.login);
+router.post("/login", Validator("login"), AuthController.login);
 router.put(
   "/users/update/:userid",
   Validator("updateUser"),
@@ -52,5 +52,15 @@ router.get(
   userMiddleWare[0],
   AuthController.getTeachers
 );
-router.post("/resetpassowrd", Validator("resetPassword"), AuthController.passwordRest);
+router.post(
+  "/resetpassowrd",
+  Validator("resetPassword"),
+  AuthController.passwordRest
+);
+router.get(
+  "/search/:searchData",
+  Auth.verifyToken,
+  userMiddleWare[0],
+  AuthController.searchUser
+);
 export default router;

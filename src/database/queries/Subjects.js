@@ -29,3 +29,8 @@ export const deleteSubject = `DELETE FROM subjects
 //retrieve all subject assigned to one teacher
 export const getSubjectByTeacher = `SELECT subjects_teachers.teacherid, subjects_teachers.levelid, subjects.subjectname,subjects.catmax,subjects.exammax
 FROM subjects_teachers inner join subjects on subjects_teachers.subjectname=subjects.subjectname where teacherid =$1`;
+
+export const searchSubject = `SELECT subjects.subjectname, catmax, exammax, subjects.levelid,teacherid,names 
+FROM subjects inner join subjects_teachers on subjects.levelid
+= subjects_teachers.levelid and subjects.subjectname= subjects_teachers.subjectname inner join users 
+on users.userid = subjects_teachers.teacherid where subjects.status ='1' and subjects.levelid =$1 and position(LOWER($2) in LOWER(subjects.subjectname) || LOWER(names))>0`;

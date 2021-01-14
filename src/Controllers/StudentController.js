@@ -164,5 +164,20 @@ class Students {
         });
       });
   }
+  async searchStudents(req, res) {
+    StudentServices.searchStudent([req.params.levelid,req.params.year,req.params.searchData])
+      .then((students) => {
+        res.status(students.status).send({
+          status: students.status,
+          message: students.message,
+          students: students.students.rows,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          message: err.message,
+        });
+      });
+  }
 }
 export default new Students();

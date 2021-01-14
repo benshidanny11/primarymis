@@ -25,3 +25,6 @@ export const create =`INSERT INTO users(
 	export const deleteuser = `delete from users where userid =$1`;
 	//check email exist on updating user
 	export const checkExist =`select * from users where email = $2 and userid !=$1 `;
+
+	export const searchUser = `select userid,names, email, phonenumber, role, password, status
+	 from users where position(LOWER($1) in LOWER(names))>0 and status = '1'`;

@@ -199,5 +199,22 @@ class AuthController {
         });
       });
   }
+
+  async searchUser(req, res) {
+    AuthService.searchUser([req.params.searchData])
+      .then((user) => {
+        res.status(user.status).send({
+          status: user.status,
+          message: user.message,
+          user: user.user.rows,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          status: 400,
+          message: err.message,
+        });
+      });
+  }
 }
 export default new AuthController();
