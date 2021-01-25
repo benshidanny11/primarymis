@@ -147,9 +147,12 @@ export const getReportSumationInYear = async (payload) => {
           let positonTerm3Res = await db.query(getPositionsByClassInTerm3, [
             classIdRes.rows[0].classid,
           ]);
-          //  console.log(classIdRes.rows[0].classid);
-
-          //{ catmax: '210', exammax: '280', totalmax: '490' }
+          const numberOfStudents = await db.query(getNumberOfStudentsInClass, [
+            classIdRes.rows[0].classid,
+          ]);
+          const studentsInClass =
+            numberOfStudents.rows[0].numberofstudentsinclass;
+          const classname = numberOfStudents.rows[0].classname;
           const average =
             ((sumCatOnePerYear.rows[0].catonesuminyer +
               sumCatTwoPerYear.rows[0].cattwosuminyear +
@@ -193,6 +196,8 @@ export const getReportSumationInYear = async (payload) => {
               },
               average,
               position: getStudentPosition(anualPositions.rows, payload[0]),
+              classname,
+              studentsInClass,
             },
           };
         } else {
