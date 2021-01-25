@@ -161,9 +161,9 @@ export const getReportSumationInYear = async (payload) => {
             (maxkMarksRes.rows[0].totalmax * 3);
           return {
             report: {
-              catOneSumInTerm: sumCatOnePerYear.rows[0].catonesuminyer,
-              catTwoSumInTerm: sumCatTwoPerYear.rows[0].cattwosuminyear,
-              examSumInTerm: examSumResPerYear.rows[0].examsumperyear,
+              // catOneSumInTerm: sumCatOnePerYear.rows[0].catonesuminyer,
+              // catTwoSumInTerm: sumCatTwoPerYear.rows[0].cattwosuminyear,
+              // examSumInTerm: examSumResPerYear.rows[0].examsumperyear,
               dataForTerms: {
                 term1: {
                   catOneSum: catOneSumPerTerm1Res.rows[0],
@@ -185,10 +185,10 @@ export const getReportSumationInYear = async (payload) => {
                 },
               },
 
-              totalMarksPerYear:
-                sumCatOnePerYear.rows[0].catonesuminyer +
-                sumCatTwoPerYear.rows[0].cattwosuminyear +
-                examSumResPerYear.rows[0].examsumperyear,
+              // totalMarksPerYear:
+              //   sumCatOnePerYear.rows[0].catonesuminyer +
+              //   sumCatTwoPerYear.rows[0].cattwosuminyear +
+              //   examSumResPerYear.rows[0].examsumperyear,
               maxMarks: {
                 maxCatMarks: maxkMarksRes.rows[0].catmax,
                 maxExamMarks: maxkMarksRes.rows[0].exammax,
