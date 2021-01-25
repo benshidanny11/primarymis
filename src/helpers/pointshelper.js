@@ -187,9 +187,9 @@ export const getReportSumationInYear = async (payload) => {
                 sumCatTwoPerYear.rows[0].cattwosuminyear +
                 examSumResPerYear.rows[0].examsumperyear,
               maxMarks: {
-                maxCatMarksPerYer: maxkMarksRes.rows[0].catmax * 3,
-                maxExamMarksPerYer: maxkMarksRes.rows[0].exammax * 3,
-                maxTotalMarksPerYer: maxkMarksRes.rows[0].totalmax * 3,
+                maxCatMarks: maxkMarksRes.rows[0].catmax,
+                maxExamMarks: maxkMarksRes.rows[0].exammax,
+                maxTotalMarks: maxkMarksRes.rows[0].totalmax,
               },
               average,
               position: getStudentPosition(anualPositions.rows, payload[0]),
