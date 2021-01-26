@@ -147,9 +147,9 @@ catone, cattwo, exam, teacherid, term
    = $1 and points.subjectname = $2 and points.term = $3 and points.year = $4 and position(LOWER($5) in LOWER(studentnames) || LOWER(regestrationNumber))>0`;
 
 //Term 1 data for year report
-export const catOneSumPerTerm1 = `SELECT sum(catone) as catoneSumInTerm1 FROM points where studentid=$1 and levelid=$2 and term='1' and year=$3`;
-export const catTwoSumPerTerm1 = `SELECT sum(cattwo) as cattwoSumInTerm1 FROM points where studentid=$1 and levelid=$2 and term='1' and year=$3`;
-export const examSumPerTerm1 = `SELECT sum(exam)  as examSumPerTerm1 FROM points where studentid=$1 and levelid=$2 and term='1' and year=$3`;
+export const catOneSumPerTerm1 = `SELECT sum(catone) FROM points where studentid=$1 and levelid=$2 and term='1' and year=$3`;
+export const catTwoSumPerTerm1 = `SELECT sum(cattwo) FROM points where studentid=$1 and levelid=$2 and term='1' and year=$3`;
+export const examSumPerTerm1 = `SELECT sum(exam) FROM points where studentid=$1 and levelid=$2 and term='1' and year=$3`;
 
 
 //Term 2 data for year report
