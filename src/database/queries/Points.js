@@ -153,14 +153,14 @@ export const examSumPerTerm1 = `SELECT sum(exam)  as examSumPerTerm1 FROM points
 
 
 //Term 2 data for year report
-export const catOneSumPerTerm2 = `SELECT sum(catone) as catoneSumInTerm2 FROM points where studentid=$1 and levelid=$2 and term='2' and year=$3`;
-export const catTwoSumPerTerm2 = `SELECT sum(cattwo) as cattwoSumInTerm2 FROM points where studentid=$1 and levelid=$2 and term='2' and year=$3`;
-export const examSumPerTerm2 = `SELECT sum(exam)  as examSumPerTerm2 FROM points where studentid=$1 and levelid=$2 and term='2' and year=$3`;
+export const catOneSumPerTerm2 = `SELECT sum(catone) FROM points where studentid=$1 and levelid=$2 and term='2' and year=$3`;
+export const catTwoSumPerTerm2 = `SELECT sum(cattwo) FROM points where studentid=$1 and levelid=$2 and term='2' and year=$3`;
+export const examSumPerTerm2 = `SELECT sum(exam)  FROM points where studentid=$1 and levelid=$2 and term='2' and year=$3`;
 
 //Term 3 data for year report
-export const catOneSumPerTerm3 = `SELECT sum(catone) as catoneSumInTerm3 FROM points where studentid=$1 and levelid=$2 and term='3' and year=$3`;
-export const catTwoSumPerTerm3 = `SELECT sum(cattwo) as cattwoSumInTerm3 FROM points where studentid=$1 and levelid=$2 and term='3' and year=$3`;
-export const examSumPerTerm3 = `SELECT sum(exam)  as examSumPerTerm3 FROM points where studentid=$1 and levelid=$2 and term='3' and year=$3`;
+export const catOneSumPerTerm3 = `SELECT sum(catone)  FROM points where studentid=$1 and levelid=$2 and term='3' and year=$3`;
+export const catTwoSumPerTerm3 = `SELECT sum(cattwo)  FROM points where studentid=$1 and levelid=$2 and term='3' and year=$3`;
+export const examSumPerTerm3 = `SELECT sum(exam)  FROM points where studentid=$1 and levelid=$2 and term='3' and year=$3`;
 
 //Positions for each term
 export const getPositionsByClassInTerm1 = `SELECT * from positions inner join student_class on positions.studentid=student_class.studentid inner join  class on class.classid=student_class.classid WHERE term='1' and class.classid=$1`;

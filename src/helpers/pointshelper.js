@@ -182,7 +182,7 @@ export const getReportSumationInYear = async (payload) => {
                 term3: {
                   catOneSum: catOneSumPerTerm3Res.rows[0],
                   catTwoSum: catTwoSumPerTerm3Res.rows[0],
-                  examSum: examSumPerTerm1Re3.rows[0],
+                  examSum: examSumPerTerm3Res.rows[0],
                   position: getStudentPosition(positonTerm3Res.rows,payload[0]),
                 },
               },
