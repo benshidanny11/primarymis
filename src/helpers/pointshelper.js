@@ -138,6 +138,8 @@ export const getReportSumationInYear = async (payload) => {
             payload[2],
           ]);
 
+          //  console.log(classIdRes.rows[0].classid);
+
           let positonTerm1Res = await db.query(getPositionsByClassInTerm1, [
             classIdRes.rows[0].classid,
           ]);
@@ -147,9 +149,12 @@ export const getReportSumationInYear = async (payload) => {
           let positonTerm3Res = await db.query(getPositionsByClassInTerm3, [
             classIdRes.rows[0].classid,
           ]);
-          //  console.log(classIdRes.rows[0].classid);
-
-          //{ catmax: '210', exammax: '280', totalmax: '490' }
+          const numberOfStudents = await db.query(getNumberOfStudentsInClass, [
+            classIdRes.rows[0].classid,
+          ]);
+          const studentsInClass =
+            numberOfStudents.rows[0].numberofstudentsinclass;
+          const classname = numberOfStudents.rows[0].classname;
           const average =
             ((sumCatOnePerYear.rows[0].catonesuminyer +
               sumCatTwoPerYear.rows[0].cattwosuminyear +
@@ -187,12 +192,14 @@ export const getReportSumationInYear = async (payload) => {
                 sumCatTwoPerYear.rows[0].cattwosuminyear +
                 examSumResPerYear.rows[0].examsumperyear,
               maxMarks: {
-                maxCatMarksPerYer: maxkMarksRes.rows[0].catmax * 3,
-                maxExamMarksPerYer: maxkMarksRes.rows[0].exammax * 3,
-                maxTotalMarksPerYer: maxkMarksRes.rows[0].totalmax * 3,
+                maxCatMarks: maxkMarksRes.rows[0].catmax,
+                maxExamMarks: maxkMarksRes.rows[0].exammax,
+                maxTotalMarks: maxkMarksRes.rows[0].totalmax,
               },
               average,
               position: getStudentPosition(anualPositions.rows, payload[0]),
+              classname,
+              studentsInClass,
             },
           };
         } else {

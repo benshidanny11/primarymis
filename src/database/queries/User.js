@@ -1,5 +1,5 @@
 export const getAll = `SELECT userid,names, email, phonenumber, role, password, status
-FROM users where status='1' limit 8`;
+FROM users where status='1' limit 7`;
 export const getByEmail = `select userid,names,email,
 phonenumber,role,password,status from users where email =$1 and status = '1' `;
 export const getByRole  = `select userid,names,email,phonenumber,role,password,status from users where role = 'TEACHER' and status = '1'`;

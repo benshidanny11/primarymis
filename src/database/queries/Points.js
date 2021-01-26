@@ -34,7 +34,7 @@ export const getBysubjects = `SELECT subjects.levelid, subjects.subjectname, cat
 
 export const getByStudent = `SELECT subjects.levelid, 
     subjects.subjectname, catone,term,
-    cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term,year
+    cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term,year,regestrationnumber
     FROM points inner join students 
     on students.studentid = points.studentid 
     inner join subjects 
