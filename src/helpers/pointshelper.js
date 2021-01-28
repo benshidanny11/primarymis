@@ -116,7 +116,7 @@ export const getReportSumationInYear = async (payload) => {
         if (maxkMarksRes) {
           //Term 1 queries
           let catOneSumPerTerm1Res = await db.query(catOneSumPerTerm1, payload);
-          let catTwoSumPerTerm1Res = await db.query(catTwoSumPerTerm2, payload);
+          let catTwoSumPerTerm1Res = await db.query(catTwoSumPerTerm1, payload);
           let examSumPerTerm1Res = await db.query(examSumPerTerm1, payload);
 
           //Term 2 queries
@@ -126,7 +126,7 @@ export const getReportSumationInYear = async (payload) => {
 
           //Term 3 queries
           let catOneSumPerTerm3Res = await db.query(catOneSumPerTerm3, payload);
-          let catTwoSumPerTerm3Res = await db.query(catTwoSumPerTerm2, payload);
+          let catTwoSumPerTerm3Res = await db.query(catTwoSumPerTerm3, payload);
           let examSumPerTerm3Res = await db.query(examSumPerTerm3, payload);
 
           const classIdRes = await db.query(getStudentClass, [
@@ -187,10 +187,10 @@ export const getReportSumationInYear = async (payload) => {
                 },
               },
 
-              totalMarksPerYear:
-                sumCatOnePerYear.rows[0].catonesuminyer +
-                sumCatTwoPerYear.rows[0].cattwosuminyear +
-                examSumResPerYear.rows[0].examsumperyear,
+              // totalMarksPerYear:
+              //   sumCatOnePerYear.rows[0].catonesuminyer +
+              //   sumCatTwoPerYear.rows[0].cattwosuminyear +
+              //   examSumResPerYear.rows[0].examsumperyear,
               maxMarks: {
                 maxCatMarks: maxkMarksRes.rows[0].catmax,
                 maxExamMarks: maxkMarksRes.rows[0].exammax,
