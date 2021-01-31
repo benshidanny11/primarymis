@@ -152,6 +152,7 @@ export const getReportSumationInYear = async (payload) => {
           const numberOfStudents = await db.query(getNumberOfStudentsInClass, [
             classIdRes.rows[0].classid,
           ]);
+          // console.log(anualPositions.rows)
           const studentsInClass =
             numberOfStudents.rows[0].numberofstudentsinclass;
           const classname = numberOfStudents.rows[0].classname;
@@ -197,7 +198,7 @@ export const getReportSumationInYear = async (payload) => {
                 maxTotalMarks: maxkMarksRes.rows[0].totalmax,
               },
               average,
-              position: getStudentPosition(anualPositions.rows, payload[0]),
+              position: getStudentYearPosition(anualPositions.rows, payload[0]),
               classname,
               studentsInClass,
             },
@@ -225,7 +226,7 @@ export const getReportSumationInYear = async (payload) => {
   }
 };
 
-export const getStudentPosition = (students = [], studentid) => {
+export const getStudentPosition = (students=[], studentid) => {
   const sorted = students.sort(compare);
   let position = 0;
   for (let i = 0; i < sorted.length; i++) {
@@ -236,11 +237,36 @@ export const getStudentPosition = (students = [], studentid) => {
   }
   return position;
 };
-
+// for year
+export const getStudentYearPosition = (students=[], studentid) => {
+ const sorted = students.sort(compareOnYear);
+//  console.log(students)
+ let position = 0;
+ for (let i = 0; i < sorted.length; i++) {
+   if (sorted[i].studentid === studentid) {
+     position = i + 1;
+     break;
+   }
+ }
+ return position;
+};
 export const compare = (stundent1, stundent2) => {
+  // console.log(stundent1,stundent2)
   const marks1 = stundent1.totalmarks;
   const marks2 = stundent2.totalmarks;
+  let comparison = 0;
+  if (marks1 > marks2) {
+    comparison = -1;
+  } else if (marks1 < marks2) {
+    comparison = 1;
+  }
+  return comparison;
+};
 
+export const compareOnYear = (stundent1, stundent2) => {
+  // console.log(stundent1,stundent2)
+  const marks1 = stundent1.anualtotal;
+  const marks2 = stundent2.anualtotal;
   let comparison = 0;
   if (marks1 > marks2) {
     comparison = -1;
