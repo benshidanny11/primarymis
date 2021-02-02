@@ -34,7 +34,7 @@ router.put(
   AuthController.hideuser
 );
 router.get(
-  "/users/all",
+  "/users/all/:pagenumber",
   Auth.verifyToken,
   userMiddleWare[0],
   AuthController.getAll

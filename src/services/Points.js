@@ -16,6 +16,7 @@ import {
   createPosition,
   totalStudentMarks,
   searchPointByStudent,
+  countROwsBySubjectsInTerm
 } from "../database/queries/Points";
 import {getReportSumationInTerm,getReportSumationInYear} from '../helpers/pointshelper';
 
@@ -171,8 +172,22 @@ class Points {
       };
     }
   }
+
+  /*
+  [
+      req.params.levelid,
+      req.params.subjectname,
+      req.params.term,
+      req.params.year,
+      req.params.pagenumber
+    ]
+   */
   async getBysubjectsInTerm(data) {
-    let points = await db.query(getBysubjectsInTerm, data);
+    const offset=(data[4]-1)*5;
+    const getTotalPoints=await db.query(countROwsBySubjectsInTerm,[data[0],data[1],data[2],data[3]]);
+    let points = await db.query(getBysubjectsInTerm, [data[0],data[1],data[2],data[3],offset]);
+    const total={totalPages:Math.ceil(getTotalPoints.rows.length/5)};
+    points.rows.push(total);
     if (points.rowCount) {
       return {
         status: 200,

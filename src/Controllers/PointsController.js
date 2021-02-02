@@ -87,6 +87,7 @@ class PointsController {
       req.params.subjectname,
       req.params.term,
       req.params.year,
+      req.params.pagenumber
     ])
       .then((result) => {
         res.status(result.status).send({
