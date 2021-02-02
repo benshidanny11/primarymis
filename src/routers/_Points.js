@@ -51,7 +51,7 @@ router.get(
 );
 //get students points in year
 router.get(
-  "/studentsAll/:studentid/:year",
+  "/studentsAll/:studentid/:levelid/:year",
   Auth.verifyToken,
   pointsMiddleWare.isPointExistForYear,
   PointsController.getByStudents
