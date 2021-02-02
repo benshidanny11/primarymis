@@ -46,12 +46,14 @@ router.get(
 router.get(
   "/studentspoints/:studentid/:levelid/:term/:year",
    Auth.verifyToken,
+   pointsMiddleWare.isPointExistForAllSubjectsInTerm,
   PointsController.getByStudentInTerm
 );
 //get students points in year
 router.get(
   "/studentsAll/:studentid/:year",
   Auth.verifyToken,
+  pointsMiddleWare.isPointExistForYear,
   PointsController.getByStudents
 );
 router.get("/classAll/:classid/:year", 

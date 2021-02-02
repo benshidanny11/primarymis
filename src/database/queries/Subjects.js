@@ -34,3 +34,9 @@ export const searchSubject = `SELECT subjects.subjectname, catmax, exammax, subj
 FROM subjects inner join subjects_teachers on subjects.levelid
 = subjects_teachers.levelid and subjects.subjectname= subjects_teachers.subjectname inner join users 
 on users.userid = subjects_teachers.teacherid where subjects.status ='1' and subjects.levelid =$1 and position(LOWER($2) in LOWER(subjects.subjectname) || LOWER(names))>0`;
+
+
+// get all subject for point middleware
+
+export const getByLevelforMid = `SELECT subjectname,levelid 
+FROM subjects where status ='1' and levelid =$1`;
