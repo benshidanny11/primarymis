@@ -13,6 +13,7 @@ import {
   UpdateStudentLevel,
   UpdateStudentClass,
   searchStudent,
+  getTotalByLevel
 } from "../database/queries/Student";
 import random from "random";
 class StudentServices {
@@ -96,7 +97,12 @@ class StudentServices {
   }
   // getting all students by level
   async getAllByLevel(data) {
-    let students = await db.query(getByLevel, data);
+    const offset=(data[2]-1)*5;
+    const getTotalStudents=await db.query(getTotalByLevel,[data[0],data[1]])
+    let students = await db.query(getByLevel, [data[0],data[1],offset]);
+    const total={totalPages:Math.ceil(getTotalStudents.rows.length/5)};
+    students.rows.push(total);
+
     if (students.rows.length != 0) {
       return {
         status: 200,

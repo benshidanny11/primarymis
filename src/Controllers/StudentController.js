@@ -116,6 +116,7 @@ class Students {
     StudentServices.getAllByLevel([
       req.params.levelid,
       req.params.year,
+      req.params.pagenumber
     ])
       .then((students) => {
         res.status(students.status).send({

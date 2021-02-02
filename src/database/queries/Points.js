@@ -75,6 +75,22 @@ export const getBysubjectsInTerm = `SELECT subjects.levelid,
    on levels.levelid 
    = points.levelid 
    WHERE points.levelid 
+   = $1 and points.subjectname = $2 and points.term = $3 and points.year = $4 LIMIT 5 offset $5`;
+
+
+   export const countROwsBySubjectsInTerm = `SELECT subjects.levelid, 
+   subjects.subjectname, catone,
+   cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term
+   FROM points inner join students 
+   on students.studentid = points.studentid 
+   inner join subjects 
+   on subjects.subjectname = points.subjectname 
+   and subjects.levelid 
+   =points.levelid 
+   inner join levels 
+   on levels.levelid 
+   = points.levelid 
+   WHERE points.levelid 
    = $1 and points.subjectname = $2 and points.term = $3 and points.year = $4`;
 
 export const getByStudentInTerm = `SELECT studentNames,regestrationnumber,points.levelid, points.subjectname, catone, cattwo, exam, points.studentid, points.teacherid,

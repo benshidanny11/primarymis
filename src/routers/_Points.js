@@ -38,7 +38,7 @@ router.get(
 );
 // get subject marks in specfied academic year and term
 router.get(
-  "/AllInterm/:levelid/:subjectname/:term/:year",
+  "/AllInterm/:levelid/:subjectname/:term/:year/:pagenumber",
   Auth.verifyToken,
   PointsController.getBysubjectsInTerm
 );

@@ -29,6 +29,14 @@ inner join
 student_level on students.studentid 
 = student_level.studentid inner join levels on levels.levelid =student_level.levelid where student_level.levelid 
 = $1 and students.status 
+= '1' and student_level.year =$2 LIMIT 5 OFFSET $3`;
+export const getTotalByLevel = `select students.studentid, studentnames, parentsemail,
+parentsphonenumber,levelname,classname,student_level.year,student_level.levelid,regestrationNumber
+from students inner join student_class on student_class.studentid = students.studentid inner join class on student_class.classid = class.classid
+inner join
+student_level on students.studentid 
+= student_level.studentid inner join levels on levels.levelid =student_level.levelid where student_level.levelid 
+= $1 and students.status 
 = '1' and student_level.year =$2`;
 export const createStudentClass =`INSERT INTO student_class(
 	studentid, classid, year)

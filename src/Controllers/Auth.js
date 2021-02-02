@@ -134,7 +134,7 @@ class AuthController {
   }
   // getting all data from database
   async getAll(req, res) {
-    AuthService.getAll()
+    AuthService.getAll([req.params.pagenumber])
       .then((users) => {
         res.status(users.status).send({
           status: users.status,
