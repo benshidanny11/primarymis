@@ -167,3 +167,7 @@ export const getPositionsByClassInTerm1 = `SELECT * from positions inner join st
 export const getPositionsByClassInTerm2 = `SELECT * from positions inner join student_class on positions.studentid=student_class.studentid inner join  class on class.classid=student_class.classid WHERE term='2' and class.classid=$1`;
 export const getPositionsByClassInTerm3 = `SELECT * from positions inner join student_class on positions.studentid=student_class.studentid inner join  class on class.classid=student_class.classid WHERE term='3' and class.classid=$1`;
 
+export const isMarksExistForThisSubjectsInterm = `SELECT levelid,subjectname FROM points 
+  WHERE term = $1 and year=$2 and studentid = $3`;
+  export const isPointExistForYear = `SELECT levelid,subjectname FROM points 
+  WHERE year=$1 and studentid = $2`

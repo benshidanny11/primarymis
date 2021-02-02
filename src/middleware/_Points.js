@@ -1,12 +1,19 @@
 import db from "../database/connection/query";
-import { getOne } from "../database/queries/Subjects";
+import { getOne,getByLevelforMid } from "../database/queries/Subjects";
 
 import { getStudentById } from "../database/queries/Student";
 
 import { getById } from "../database/queries/Level";
 
 import { getTeacherById } from "../database/queries/User";
-import { avoidDuplicates,checkIfCatMaxIsOut,checkIfExamMaxIsOut } from "../database/queries/Points";
+import { avoidDuplicates,
+  checkIfCatMaxIsOut,
+  checkIfExamMaxIsOut,
+  isMarksExistForThisSubjectsInterm,
+  isPointExistForYear,
+} from "../database/queries/Points";
+import { async } from "regenerator-runtime";
+import { response } from "express";
 
 export default {
   avoidDuplicate: async (req, res, next) => {
@@ -152,6 +159,63 @@ export default {
         }     
       }
 
-    });
+    })
   },
+  /*middleware for checking 
+  if students has
+   marks for all subjects 
+   in a term
+   */
+
+  isPointExistForAllSubjectsInTerm(req,res,next){
+    db.query(getByLevelforMid,[req.params.levelid])
+    .then((response)=>{
+   let subjects = response.rowCount;
+   db.query(isMarksExistForThisSubjectsInterm,[req.params.term,
+    req.params.year,
+    req.params.studentid]).then((response)=>{
+      let points = response.rowCount
+      if(subjects == points){
+        next()
+      }else{
+        res.status(400).send({
+          status: 400,
+          message: `This student does not have marks for all subjects!!`,
+        });
+      }
+    })
+  
+    }).catch((error)=>{
+      res.send(error.message)
+    })
+  },
+
+  /*middleware for checking 
+  if students has
+   marks for all subjects 
+   in a year
+   */
+
+  isPointExistForYear(req,res,next){
+    db.query(getByLevelforMid,[req.params.levelid])
+    .then((response)=>{
+   let subjects = response.rowCount;
+   db.query(isPointExistForYear,[
+    req.params.year,
+    req.params.studentid]).then((response)=>{
+      let points = response.rowCount
+      if((subjects*3) == points){
+        next()
+      }else{
+        res.status(400).send({
+          status: 400,
+          message: `This student does not have marks for all subjects!!`,
+        });
+      }
+    })
+  
+    }).catch((error)=>{
+      res.send(error.message)
+    })
+  }
 };
