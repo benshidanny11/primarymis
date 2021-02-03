@@ -121,12 +121,12 @@ class AuthService {
     const offset=(data[0]-1)*5;
     const totalUsersRes=await db.query(getTotalUsers);
     let users = await db.query(getAll,[offset]);
-    users.rows.push({totalPages:Math.ceil(totalUsersRes.rows[0].totaluses/5)})
     if (users.rows.length != 0) {
       return {
         status: 200,
         users: users,
         message: "data found",
+        totalPages:Math.ceil(totalUsersRes.rows[0].totaluses/5)
       };
     } else {
       return {

@@ -140,6 +140,7 @@ class AuthController {
           status: users.status,
           message: users.message,
           users: users.users.rows,
+          totalPages:users.totalPages
         });
       })
       .catch((err) => {
