@@ -94,6 +94,7 @@ class PointsController {
           status: result.status,
           message: result.message,
           points: result.response.rows,
+          totalPages:result.totaPages
         });
       })
       .catch((err) => {

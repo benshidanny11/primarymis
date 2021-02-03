@@ -123,6 +123,7 @@ class Students {
           status: students.status,
           message: students.message,
           students: students.students.rows,
+          totalPages:students.totalPages
         });
       })
       .catch((err) => {
