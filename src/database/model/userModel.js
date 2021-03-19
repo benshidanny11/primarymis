@@ -13,8 +13,9 @@ dotenv.config();
   '1',
   moment(new Date())
  ]
-db.query(create,user).then((userResponse)=>{
 
+db.query(create,user).then((userResponse)=>{
+console.log(userResponse.rows[0])
 }).catch((err)=>{
     console.log(err)
 });
