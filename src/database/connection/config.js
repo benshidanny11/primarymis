@@ -8,6 +8,10 @@ config.development = {
   database: process.env.DB,
   user: process.env.USER,
   password: process.env.PASSWORD,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false
+  }
 };
 config.production = {
   connectionString: process.env.DATABASE_URL,
