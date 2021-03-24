@@ -8,12 +8,15 @@ config.development = {
   database: process.env.DB,
   user: process.env.USER,
   password: process.env.PASSWORD,
-  dialect: 'postgres',
-  dialectOptions: {
-    "ssl": {"require":true }
-  }
 };
 config.production = {
   connectionString: process.env.DATABASE_URL,
+  dialect: 'postgres',
+  dialectOptions: {
+    "ssl": {"require":true }
+  },
+  ssl: {
+    rejectUnauthorized: false
+  }
 }
 export default config;
