@@ -8,9 +8,9 @@ config.development = {
   database: process.env.DB,
   user: process.env.USER,
   password: process.env.PASSWORD,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false
+  dialect: 'postgres',
+  dialectOptions: {
+    "ssl": {"require":true }
   }
 };
 config.production = {
