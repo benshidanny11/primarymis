@@ -11,5 +11,12 @@ config.development = {
 };
 config.production = {
   connectionString: process.env.DATABASE_URL,
+  dialect: 'postgres',
+  dialectOptions: {
+    "ssl": {"require":true }
+  },
+  ssl: {
+    rejectUnauthorized: false
+  }
 }
 export default config;
